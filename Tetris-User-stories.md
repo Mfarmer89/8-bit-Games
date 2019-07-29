@@ -1,6 +1,6 @@
-As a developer i want to link the game to the home page
+As a developer i want to link the game to the home page so that the user can browse the game selections
 
-As a developer i want to make a 10x20 gridded box for the gaming board.
+As a developer i want to make a 10x20 gridded box for the gaming board. 
 
 As a developer i should make atleast 8 different block shapes
 
