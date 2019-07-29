@@ -1,0 +1,24 @@
+h1 {
+  font-family: 'Saira Stencil One', cursive;
+  font-size: 100px;
+  margin: 50px;
+  text-align: center;
+}
+
+main {
+  display: flex;
+}
+
+div {
+  text-align: center;
+  border: 1px solid black;
+  flex-grow: 1;
+  margin: 30px;
+  padding: 10px;
+}
+
+h2 {
+  font-family: 'Darker Grotesque', sans-serif;
+  font-size: 30px;
+  text-align: center;
+}
