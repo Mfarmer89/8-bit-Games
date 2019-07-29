@@ -11,7 +11,7 @@ main {
 
 div {
   text-align: center;
-  border: 1px solid black;
+  border: 2px solid black;
   flex-grow: 1;
   margin: 30px;
   padding: 10px;
