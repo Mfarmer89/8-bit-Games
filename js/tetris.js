@@ -218,33 +218,97 @@ function Piece(tetromino,color) {
   this.y = 0;
 }
 
-//draw the pieces to the board
-Piece.prototype.draw = function(){
+//fill 
+//just copy past the code from bellow
+//you can replace the code bellow after with a call to this fuction
+Piece.prototype.fill = function(color){
   //just copy paste the for loop from a couple lines up and change some stuff
   for( r = 0; r < this.activeTetromino.length; r++){
     for(c = 0; c < this.activeTetromino.length; c++){
       //draw only filled squares
       if( this.activeTetromino[r][c]){
-        drawSquare(this.x + c,this.y + r,this.color);
+        drawSquare(this.x + c,this.y + r, color);
       }
     }
   }
 }
+
+//draw the pieces to the board
+Piece.prototype.draw = function(){
+  //just copy paste the for loop from a couple lines up and change some stuff
+  this.fill(this.color);
+}
 //call the draw thing
-p.draw();
+// p.draw();
+
+//undraw so it doesnt smudge
+Piece.prototype.unDraw = function(){
+  //just copy paste the for loop from a couple lines up and change some stuff
+  this.fill(VACANT);
+}
 
 //to make the piece move we need to change the x and y vars above so... more loops! yay -_-
 
 //move piece down 
 Piece.prototype.moveDown = function() {
   //constant fall
+  this.unDraw();
   this.y++;
   this.draw();
 }
 
+//slide to the right
+Piece.prototype.moveRight = function() {
+  //constant fall
+  this.unDraw();
+  this.x++;
+  this.draw();
+}
+
+//slide to the left
+Piece.prototype.moveLeft = function() {
+  //constant fall
+  this.unDraw();
+  this.x--;
+  this.draw();
+}
+
+//cha cha real smooth
+Piece.prototype.rotate = function() {
+  //constant fall
+  this.unDraw();
+  //move 1 up in array 
+  this.tetrominoN = (this.tetrominoN + 1)%this.tetromino.length;
+  this.activeTetromino = this.tetromino[this.tetrominoN];
+  this.draw();
+}
+
+//event listener for controls
+document.addEventListener("keydown", CONTROL);
+
+function CONTROL(event) {
+  if(event.keyCode == 37){
+p.moveLeft();
+  }else if(event.keyCode === 38){
+p.rotate();
+  }else if(event.keyCode === 39){
+p.moveRight();
+  }else if(event.keyCode = 40){
+p.moveDown();
+  }
+}
+
+
 //fall once every tick
+let dropStart = Date.now();
 function drop() {
-  p.moveDown();
+  let now = Date.now();
+  let delta = now - dropStart;
+  //1000 mil secs
+  if (delta > 1000){
+    p.moveDown();
+    dropStart = Date.now();
+  }
   requestAnimationFrame(drop);
 }
 drop();
