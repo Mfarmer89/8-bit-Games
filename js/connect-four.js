@@ -2,12 +2,15 @@
 var selectedColumn;
 var selectedRow;
 var selectedCell;
+var player = "player1";
 var gridPosition = [
-  [0, 0, 0, 0],
-  [0, 0, 0, 0],
-  [0, 0, 0, 0],
-  [0, 0, 0, 0],
-  [9, 9, 9, 9]
+  [0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0],
+  [9, 9, 9, 9, 9, 9, 9]
 ];
 
 //locate empty row to fill
@@ -23,8 +26,16 @@ function findRow(selectedColumn) {
 }
 
 function getSelectedCell(selectedRow, selectedColumn) {
-  selectedCell = selectedColumn + (selectedRow * 4);
+  selectedCell = selectedColumn + (selectedRow * 7);
   return selectedCell;
+}
+
+function switchPlayer() {
+  if (player === "player1") {
+    player = "player2";
+  } else {
+    player = "player1";
+  }
 }
 
 //event handler
@@ -35,5 +46,6 @@ grid.addEventListener("click", function(event) {
   findRow(selectedColumn);
   getSelectedCell(selectedRow, selectedColumn);
   var allCells = document.querySelectorAll(".cell");
-  allCells[selectedCell].setAttribute("class", "cell player1");
+  allCells[selectedCell].setAttribute("class", "cell " + player);
+  switchPlayer();
 });
