@@ -3,6 +3,7 @@ var selectedColumn;
 var selectedRow;
 var selectedCell;
 var player = "player1";
+// var singlePlayer = false;
 var gridPosition = [
   [0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0],
@@ -12,6 +13,11 @@ var gridPosition = [
   [0, 0, 0, 0, 0, 0, 0],
   [9, 9, 9, 9, 9, 9, 9]
 ];
+
+// var numbPlayers = prompt("singleplayer? (yes or no)").toLowerCase();
+// if (numbPlayers === "yes") {
+//   singlePlayer = true;
+// }
 
 //locate empty row to fill
 function findRow(selectedColumn) { 
@@ -79,11 +85,45 @@ function checkVertical(playerNumber) {
   }
 }
 
+function checkDiagonal1(playerNumber) {
+  for(var j = 0; j < 7; j++) {
+    for (var row = 6; row >= 0; row--) {
+      if (
+        gridPosition[row][j] === playerNumber &&
+        gridPosition[row-1][j+1] === playerNumber &&
+        gridPosition[row-2][j+2] === playerNumber &&
+        gridPosition[row-3][j+3] === playerNumber
+      ) {
+        alert(`Player${playerNumber} wins!`);
+      }
+    }
+  }
+}
+
+function checkDiagonal2(playerNumber) {
+  for(var j = 0; j < 7; j++) {
+    for (var row = 6; row >= 0; row--) {
+      if (
+        gridPosition[row][j] === playerNumber &&
+        gridPosition[row+1][j+1] === playerNumber &&
+        gridPosition[row+2][j+2] === playerNumber &&
+        gridPosition[row+3][j+3] === playerNumber
+      ) {
+        alert(`Player${playerNumber} wins!`);
+      }
+    }
+  }
+}
+
 function checkForWin () {
   checkHorizontal(1);
   checkHorizontal(2);
   checkVertical(1);
   checkVertical(2);
+  checkDiagonal1(1);
+  checkDiagonal1(2);
+  checkDiagonal2(1);
+  checkDiagonal2(2);
 }
 
 //event handler
@@ -98,3 +138,8 @@ grid.addEventListener("click", function(event) {
   checkForWin();
   switchPlayer();
 });
+
+// if (player === player2 && singlePlayer) {
+//   // grid.click();
+//   document.getElementById("grid").click()
+// }
