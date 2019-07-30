@@ -126,11 +126,11 @@
 // ];
 
 //get the canvas from html
-const cvs = document.getElementById("tetris")
+const cvs = document.getElementById("tetris");
 //context of the canvas
-const ctx = cvs.getContext("2d")
+const ctx = cvs.getContext("2d");
 
-//create a variable for the row and collum 
+//create a variable for the row and column 
 const ROW = 20;
 const COL = COLUMN = 10;
 const SQ = squareSize = 20;
@@ -174,7 +174,7 @@ board[r][c] = VACANT;
 //then draw the board on the canvas
 function drawBoard(){
   for( r = 0; r < ROW; r++){
-    for(c = 0; c < COL; C++){
+    for(c = 0; c < COL; c++){
       drawSquare(c,r,board[r][c]);
     }
   }
