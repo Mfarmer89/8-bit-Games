@@ -179,8 +179,75 @@ function drawBoard(){
     }
   }
 }
-
+//call the draw board function(this might cange if you decide to do a co op tetris)
 drawBoard();
+
+//piece colors
+//write an array inside an array for the colors.
+const PIECES = [
+//make the Z blocks red
+[Z, "red"],
+//s is green probably
+[S, "green"],
+//purple T
+[T, "purple"],
+//yellow 0
+[O, "yellow"],
+//orange L
+[L, "orange"],
+// Unsure color of I
+[I, "turquoise"],
+//Blue jay (:
+[J, "blue"],
+];
+
+//initiate the pieces
+let p = new Piece( PIECES[0][0],PIECES[0][1]); 
+
+
+//create the piece (think theyre called tetrominos)
+function Piece(tetromino,color) {
+  this.tetromino = tetromino;
+  this.color = color;
+  //start from the first pattern 
+  this.tetrominoN = 0;
+  this.activeTetromino = this.tetromino[this.tetrominoN];//tetrominoN is the tetromino number
+
+  //set up the controls for the pieces
+  this.x = 0;
+  this.y = 0;
+}
+
+//draw the pieces to the board
+Piece.prototype.draw = function(){
+  //just copy paste the for loop from a couple lines up and change some stuff
+  for( r = 0; r < this.activeTetromino.length; r++){
+    for(c = 0; c < this.activeTetromino.length; c++){
+      //draw only filled squares
+      if( this.activeTetromino[r][c]){
+        drawSquare(this.x + c,this.y + r,this.color);
+      }
+    }
+  }
+}
+//call the draw thing
+p.draw();
+
+//to make the piece move we need to change the x and y vars above so... more loops! yay -_-
+
+//move piece down 
+Piece.prototype.moveDown = function() {
+  //constant fall
+  this.y++;
+  this.draw();
+}
+
+//fall once every tick
+function drop() {
+  p.moveDown();
+  requestAnimationFrame(drop);
+}
+drop();
 //get the context of canvas to get methods and properties and allow use in JS
 
 //Create arrays to make the variable positions for each shape (might want to do this in another JS file)
