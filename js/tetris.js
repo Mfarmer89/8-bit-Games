@@ -231,20 +231,41 @@ Piece.prototype.draw = function(){
   }
 }
 //call the draw thing
-p.draw();
+// p.draw();
+
+//undraw so it doesnt smudge
+Piece.prototype.unDraw = function(){
+  //just copy paste the for loop from a couple lines up and change some stuff
+  for( r = 0; r < this.activeTetromino.length; r++){
+    for(c = 0; c < this.activeTetromino.length; c++){
+      //draw only filled squares
+      if( this.activeTetromino[r][c]){
+        drawSquare(this.x + c,this.y + r,VACANT);
+      }
+    }
+  }
+}
 
 //to make the piece move we need to change the x and y vars above so... more loops! yay -_-
 
 //move piece down 
 Piece.prototype.moveDown = function() {
   //constant fall
+  this.unDraw();
   this.y++;
   this.draw();
 }
 
 //fall once every tick
+let dropStart = Date.now();
 function drop() {
-  p.moveDown();
+  let now = Date.now();
+  let delta = now - dropStart;
+  //1000 mil secs
+  if (delta > 1000){
+    p.moveDown();
+    dropStart = Date.now();
+  }
   requestAnimationFrame(drop);
 }
 drop();
