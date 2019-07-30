@@ -21,7 +21,11 @@ function findRow(selectedColumn) {
     // console.log(gridPosition[i][selectedColumn]);
     i++;
   }
-  gridPosition[i-1][selectedColumn] = 1;
+  if (player === "player1") {
+    gridPosition[i-1][selectedColumn] = 1;
+  } else {
+    gridPosition[i-1][selectedColumn] = 2;
+  }
   selectedRow = i-1;
 }
 
