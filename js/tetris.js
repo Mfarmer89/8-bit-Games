@@ -198,11 +198,16 @@ const PIECES = [
 // Unsure color of I
 [I, "turquoise"],
 //Blue jay (:
-[J, "blue"],
+[J, "blue"], 
 ];
 
 //initiate the pieces
-let p = new Piece( PIECES[0][0],PIECES[0][1]); 
+
+function randomPiece(){
+  let r = randomN = Math.floor(Math.random() * PIECES.length) //0-6
+  return new Piece(PIECES[r][0],PIECES[r][1])
+}
+let p = randomPiece();
 
 
 //create the piece (think theyre called tetrominos)
@@ -251,30 +256,42 @@ Piece.prototype.unDraw = function(){
 
 //move piece down 
 Piece.prototype.moveDown = function() {
-  //constant fall
-  this.unDraw();
-  this.y++;
-  this.draw();
+  if(!this.collision(0,1,this.activeTetromino)){
+//constant fall
+this.unDraw();
+this.y++;
+this.draw();
+  }else{
+      //lock it in
+      p = randomPiece();
+  }
+
 }
 
 //slide to the right
+
 Piece.prototype.moveRight = function() {
+  if(!this.collision(1,0,this.activeTetromino)){
   //constant fall
   this.unDraw();
   this.x++;
   this.draw();
 }
+}
 
 //slide to the left
 Piece.prototype.moveLeft = function() {
+  if(!this.collision(-1,0,this.activeTetromino)){
   //constant fall
   this.unDraw();
   this.x--;
   this.draw();
 }
-
+}
 //cha cha real smooth
 Piece.prototype.rotate = function() {
+  let nextPattern = this.tetromino[(this.tetrominoN + 1)%this.tetromino.length];
+  if(!this.collision(0,0,nextPattern)){
   //constant fall
   this.unDraw();
   //move 1 up in array 
@@ -282,7 +299,33 @@ Piece.prototype.rotate = function() {
   this.activeTetromino = this.tetromino[this.tetrominoN];
   this.draw();
 }
+}
 
+//collision detection
+Piece.prototype.collision = function(x,y,piece){
+for( r = 0; r < piece.length; r++){
+  for( c = 0; c < piece.length; c++){
+    //check for if the square is filled or empty
+    if(!piece[r][c]){
+      continue;
+    }
+    //location of piece after moving
+    let newX = this.x + c + x;
+    let newY = this.y + r + y;
+
+    //now we set a bunch of rules
+    if(newX < 0 || newX >= COL || newY >= ROW){
+      return true;
+    }
+    if(newY < 0){
+      continue;
+    }
+    if( board[newY][newX] !=VACANT){
+      return true;
+    }
+  }
+}
+}
 //event listener for controls
 document.addEventListener("keydown", CONTROL);
 
