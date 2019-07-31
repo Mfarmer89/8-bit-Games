@@ -25,3 +25,86 @@
   background: black;
   border-radius: 50%;
 }
+
+#modal {
+  background: #DDD;
+  border: 2px solid black;
+  height: 420px;
+  margin: 0 auto;
+  opacity: 0.9;
+  padding: auto;
+  padding-top: 180px;
+  position: fixed;
+  top: 10px;
+  left: 300px;
+  width: 705px;
+}
+
+#modal div {
+  background: #AAA;
+  border: 2px solid black;
+  cursor: pointer;
+  display: block;
+  height: 50px;
+  margin: 0 auto 20px;
+  padding: auto;
+  text-align: center;
+  width: 250px;
+}
+
+span {
+  display: inline-block;
+  font-family: sans-serif;
+  font-size: 20px;
+  margin-top: 14px;
+
+}
+
+.winModal {
+  background: rgb(252, 252, 252);
+  border: 2px solid black;
+  height: 420px;
+  margin: 0 auto;
+  opacity: 0.9;
+  padding: auto;
+  padding-top: 180px;
+  position: fixed;
+  top: 10px;
+  left: 300px;
+  visibility: hidden;
+  width: 705px;
+}
+
+h3 {
+  display: block;
+  font-family: sans-serif;
+  font-size: 80px;
+  margin: 10px auto;
+  width: 400px;
+}
+
+#close {
+  border: 2px solid black;
+  cursor: pointer;
+  font-size: 30px;
+  margin: 100px auto;
+  padding: 10px;
+  width: 100px;
+}
+
+.show-modal {
+  background: rgb(252, 252, 252);
+  border: 2px solid black;
+  height: 420px;
+  margin: 0 auto;
+  opacity: 0.7;
+  padding: auto;
+  padding-top: 180px;
+  position: fixed;
+  top: 10px;
+  left: 300px;
+  visibility: visible;
+  width: 705px;
+  /* transform: scale(1.0);
+  transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s; */
+}

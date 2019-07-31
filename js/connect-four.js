@@ -15,16 +15,37 @@ var gridPosition = [
   [9, 9, 9, 9, 9, 9, 9]
 ];
 
+//draw grid
+function drawGrid() {
+  grid = document.getElementById("grid");
+  for(var j = 0; j < 6; j++) {
+    for(var i = 1; i < 8; i++) {
+      var div = document.createElement("div");
+      div.setAttribute("class", "cell");
+      div.setAttribute("data-column", i);
+      grid.appendChild(div);
+    }
+  }
+  return grid;
+}
+drawGrid();
+
+//select single or 2 player mode
+var startModal = document.getElementById("modal");
+document.querySelectorAll("#modal div:first-child")[0].addEventListener("click", function() {
+  singlePlayer = "true";
+  startModal.setAttribute("style", "display: none;");
+});
+document.querySelectorAll("#modal div:nth-child(2n)")[0].addEventListener("click", function() {
+  singlePlayer = "false";
+  startModal.setAttribute("style", "display: none;");
+});
 
 //Audios
 var blop = new Audio();
 blop.src = "audio/Blop.mp3";
 var cheer = new Audio();
 cheer.src = "audio/1_person_cheering.mp3";
-
-singlePlayer = prompt("single player? (true or false)").toLowerCase();
-console.log({singlePlayer});
-document.getElementById("grid")
 
 //locate empty row to fill
 function findRow(selectedColumn) { 
@@ -135,7 +156,7 @@ function checkForWin () {
   checkDiagonal2(2);
   if (win === true) {
     cheer.play();
-    alert(`Player${player} wins!`); //return player #
+    document.querySelector("div.winModal").setAttribute("class", "show-modal");
     //clear board on exiting pop up
   }
 }
@@ -158,7 +179,6 @@ function addPiece(){
     selectedColumn = Math.floor(Math.random() * 8);
     findRow(selectedColumn);
     getSelectedCell(selectedRow, selectedColumn);
-    var allCells = document.querySelectorAll(".cell");
     blop.play();
     allCells[selectedCell].setAttribute("class", "cell " + player);
     checkForWin();
@@ -166,4 +186,20 @@ function addPiece(){
   }
 }
 
-// http://soundbible.com for sound effects
+//reset
+document.getElementById("close").addEventListener("click", function() {
+  document.querySelector("div.show-modal").setAttribute("class", "winModal");
+  // document.querySelectorAll("#grid>div").setAttribute("class", "cell");
+  document.getElementById("grid").innerHTML = "";
+  drawGrid();
+  gridPosition = [
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [9, 9, 9, 9, 9, 9, 9]
+  ];
+});
+
