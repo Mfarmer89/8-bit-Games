@@ -1,0 +1,50 @@
+body {
+  background: rgb(162, 162, 233); 
+}
+
+h1 {
+  font-family: 'Saira Stencil One', cursive;
+  font-size: 100px;
+  margin: 50px;
+  text-align: center;
+}
+
+h2 {  font-family: 'Darker Grotesque', sans-serif;
+  font-size: 45px;
+  text-align: center;
+}
+
+p {
+  line-height: 28px;
+  margin: 30px 80px;
+}
+
+main {
+  /* background: rgb(162, 162, 233); */
+  display: flex;
+}
+
+.profile {
+  background: white;
+  text-align: center;
+  border: 2px solid black;
+  flex: 1;
+  margin: 30px;
+  padding: 30px 0;
+}
+
+.button {
+  background: rgb(162, 162, 233);
+  border: 2px solid black;
+  height: 30px;
+  margin: 0 auto 20px;
+  width: 300px;
+}
+
+a {
+  color: black;
+  cursor: pointer;
+  font-size: 24px;
+  text-decoration: none;
+
+}

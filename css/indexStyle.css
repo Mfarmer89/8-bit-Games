@@ -5,14 +5,14 @@ h1 {
   text-align: center;
 }
 
-main {
+.flex {
   display: flex;
 }
 
-div {
+.game {
   text-align: center;
   border: 2px solid black;
-  flex-grow: 1;
+  flex: 1;
   margin: 30px;
   padding: 10px;
 }
@@ -26,4 +26,19 @@ h2 {
   font-family: 'Darker Grotesque', sans-serif;
   font-size: 45px;
   text-align: center;
+}
+
+.button {
+  border: 2px solid black;
+  height: 30px;
+  margin: 0 auto 20px;
+  text-align: center;
+  width: 300px;
+}
+
+.button a {
+  color: black;
+  cursor: pointer;
+  font-size: 24px;
+  text-decoration: none;
 }
