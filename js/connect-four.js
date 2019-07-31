@@ -167,9 +167,11 @@ function checkForWin () {
   }
 }
 
-//event listener
+//event listener if not comp turn
 var grid = document.getElementById("grid");
-grid.addEventListener("click", addPiece);
+if (player === "player1" || singlePlayer === "false") {
+  grid.addEventListener("click", addPiece);
+}
 
 //event function
 function addPiece(){
