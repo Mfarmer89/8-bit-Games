@@ -3,7 +3,8 @@ var selectedColumn;
 var selectedRow;
 var selectedCell;
 var player = "player1";
-// var singlePlayer = false;
+var singlePlayer;
+var win;
 var gridPosition = [
   [0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0],
@@ -14,10 +15,37 @@ var gridPosition = [
   [9, 9, 9, 9, 9, 9, 9]
 ];
 
-// var numbPlayers = prompt("singleplayer? (yes or no)").toLowerCase();
-// if (numbPlayers === "yes") {
-//   singlePlayer = true;
-// }
+//draw grid
+function drawGrid() {
+  grid = document.getElementById("grid");
+  for(var j = 0; j < 6; j++) {
+    for(var i = 1; i < 8; i++) {
+      var div = document.createElement("div");
+      div.setAttribute("class", "cell");
+      div.setAttribute("data-column", i);
+      grid.appendChild(div);
+    }
+  }
+  return grid;
+}
+drawGrid();
+
+//select single or 2 player mode
+var startModal = document.getElementById("modal");
+document.querySelectorAll("#modal div:first-child")[0].addEventListener("click", function() {
+  singlePlayer = "true";
+  startModal.setAttribute("style", "display: none;");
+});
+document.querySelectorAll("#modal div:nth-child(2n)")[0].addEventListener("click", function() {
+  singlePlayer = "false";
+  startModal.setAttribute("style", "display: none;");
+});
+
+//Audios
+var blop = new Audio();
+blop.src = "audio/Blop.mp3";
+var cheer = new Audio();
+cheer.src = "audio/1_person_cheering.mp3";
 
 //locate empty row to fill
 function findRow(selectedColumn) { 
@@ -56,7 +84,7 @@ function checkHorizontal(playerNumber) {
       if(gridPosition[i][j] === playerNumber) {
         rowCount++;
         if(rowCount === 4) {
-          alert(`Player${playerNumber} wins!`);
+          win = true;
           break;
         }
       } else {
@@ -74,7 +102,7 @@ function checkVertical(playerNumber) {
       if(gridPosition[i][j] === playerNumber) {
         colCount++;
         if(colCount === 4) {
-          alert(`Player${playerNumber} wins!`);
+          win = true;
           break;
         }
       } else {
@@ -94,7 +122,8 @@ function checkDiagonal1(playerNumber) {
         gridPosition[row-2][j+2] === playerNumber &&
         gridPosition[row-3][j+3] === playerNumber
       ) {
-        alert(`Player${playerNumber} wins!`);
+        win = true;
+        break;
       }
     }
   }
@@ -109,7 +138,8 @@ function checkDiagonal2(playerNumber) {
         gridPosition[row+2][j+2] === playerNumber &&
         gridPosition[row+3][j+3] === playerNumber
       ) {
-        alert(`Player${playerNumber} wins!`);
+        win = true;
+        break;
       }
     }
   }
@@ -124,22 +154,52 @@ function checkForWin () {
   checkDiagonal1(2);
   checkDiagonal2(1);
   checkDiagonal2(2);
+  if (win === true) {
+    cheer.play();
+    document.querySelector("div.winModal").setAttribute("class", "show-modal");
+    //clear board on exiting pop up
+  }
 }
 
-//event handler
+//event listener
 var grid = document.getElementById("grid");
-grid.addEventListener("click", function(event) {
-  event.preventDefault(); //what does this do again?
+grid.addEventListener("click", addPiece);
+
+//event function
+function addPiece(){
   selectedColumn = event.target.getAttribute("data-column") -1;
   findRow(selectedColumn);
   getSelectedCell(selectedRow, selectedColumn);
   var allCells = document.querySelectorAll(".cell");
+  blop.play();
   allCells[selectedCell].setAttribute("class", "cell " + player);
   checkForWin();
   switchPlayer();
+  if(singlePlayer === "true") {
+    selectedColumn = Math.floor(Math.random() * 8);
+    findRow(selectedColumn);
+    getSelectedCell(selectedRow, selectedColumn);
+    blop.play();
+    allCells[selectedCell].setAttribute("class", "cell " + player);
+    checkForWin();
+    switchPlayer();
+  }
+}
+
+//reset
+document.getElementById("close").addEventListener("click", function() {
+  document.querySelector("div.show-modal").setAttribute("class", "winModal");
+  // document.querySelectorAll("#grid>div").setAttribute("class", "cell");
+  document.getElementById("grid").innerHTML = "";
+  drawGrid();
+  gridPosition = [
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [9, 9, 9, 9, 9, 9, 9]
+  ];
 });
 
-// if (player === player2 && singlePlayer) {
-//   // grid.click();
-//   document.getElementById("grid").click()
-// }
