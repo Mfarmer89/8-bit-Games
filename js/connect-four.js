@@ -49,7 +49,7 @@ var cheer = new Audio();
 cheer.src = "audio/1_person_cheering.mp3";
 
 //locate empty row to fill
-function findRow(selectedColumn) { 
+function findRow(selectedColumn) {
   var i = 0;
   while(gridPosition[i][selectedColumn] === 0) {
     i++;
@@ -115,13 +115,13 @@ function checkVertical(playerNumber) {
 }
 
 function checkDiagonal1(playerNumber) {
-  for(var j = 0; j < 7; j++) {
-    for (var row = 6; row >= 0; row--) {
+  for(var i = 0; i < 3; i++) {
+    for (var j = 6; j > 2; j--) {
       if (
-        gridPosition[row][j] === playerNumber &&
-        gridPosition[row-1][j+1] === playerNumber &&
-        gridPosition[row-2][j+2] === playerNumber &&
-        gridPosition[row-3][j+3] === playerNumber
+        gridPosition[i][j] === playerNumber &&
+        gridPosition[i+1][j-1] === playerNumber &&
+        gridPosition[i+2][j-2] === playerNumber &&
+        gridPosition[i+3][j-3] === playerNumber
       ) {
         win = true;
         break;
@@ -131,13 +131,13 @@ function checkDiagonal1(playerNumber) {
 }
 
 function checkDiagonal2(playerNumber) {
-  for(var j = 0; j < 7; j++) {
-    for (var row = 6; row >= 0; row--) {
+  for(var i = 0; i < 3; i++) {
+    for (var j = 0; j < 4; j++) {
       if (
-        gridPosition[row][j] === playerNumber &&
-        gridPosition[row+1][j+1] === playerNumber &&
-        gridPosition[row+2][j+2] === playerNumber &&
-        gridPosition[row+3][j+3] === playerNumber
+        gridPosition[i][j] === playerNumber &&
+        gridPosition[i+1][j+1] === playerNumber &&
+        gridPosition[i+2][j+2] === playerNumber &&
+        gridPosition[i+3][j+3] === playerNumber
       ) {
         win = true;
         break;
@@ -147,7 +147,7 @@ function checkDiagonal2(playerNumber) {
 }
 
 function won(enterplayernumber) {
-  winMsg = `Player ${enterplayernumber} wins!`
+  winMsg = `Player ${enterplayernumber} wins!`;
   cheer.play();
   document.getElementsByTagName("h3")[0].innerHTML = winMsg;
   document.querySelector("div.winModal").setAttribute("class", "show-modal");
@@ -167,13 +167,18 @@ function checkForWin () {
   }
 }
 
-//event listener
+//event listener if not comp turn
 var grid = document.getElementById("grid");
-grid.addEventListener("click", addPiece);
+if (player === "player1" || singlePlayer === "false") {
+  grid.addEventListener("click", addPiece);
+}
 
 //event function
 function addPiece(){
   selectedColumn = event.target.getAttribute("data-column") -1;
+  // if(gridPosition[0][selectedColumn] !== 0) {
+  //   return;
+  // }
   findRow(selectedColumn);
   getSelectedCell(selectedRow, selectedColumn);
   var allCells = document.querySelectorAll(".cell");
@@ -181,6 +186,7 @@ function addPiece(){
   allCells[selectedCell].setAttribute("class", "cell " + player);
   checkForWin();
   switchPlayer();
+  //computer as player 2
   if(singlePlayer === "true") {
     selectedColumn = Math.floor(Math.random() * 8);
     findRow(selectedColumn);
@@ -194,19 +200,19 @@ function addPiece(){
 
 //reset
 document.getElementById("close").addEventListener("click", function() {
-  document.querySelector("div.show-modal").setAttribute("class", "winModal");
-  // document.querySelectorAll("#grid>div").setAttribute("class", "cell");
-  document.getElementById("grid").innerHTML = "";
-  drawGrid();
-  gridPosition = [
-    [0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0],
-    [9, 9, 9, 9, 9, 9, 9]
-  ];
+  // document.querySelector("div.show-modal").setAttribute("class", "winModal");
+  // // document.querySelectorAll("#grid>div").setAttribute("class", "cell");
+  // document.getElementById("grid").innerHTML = "";
+  // drawGrid();
+  // gridPosition = [
+  //   [0, 0, 0, 0, 0, 0, 0],
+  //   [0, 0, 0, 0, 0, 0, 0],
+  //   [0, 0, 0, 0, 0, 0, 0],
+  //   [0, 0, 0, 0, 0, 0, 0],
+  //   [0, 0, 0, 0, 0, 0, 0],
+  //   [0, 0, 0, 0, 0, 0, 0],
+  //   [9, 9, 9, 9, 9, 9, 9]
+  // ];
   document.location.reload(true);
 });
 
