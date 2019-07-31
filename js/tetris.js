@@ -1,457 +1,273 @@
-//Create arrays within arrays for the I/Line shape and every possible rotation (must be 4x4)
 
-//Create arrays within arrays for the J shape and every possible rotation (must be 3x3)
-// const J = [
-// 	[
-// 		[1, 0, 0],
-// 		[1, 1, 1],
-// 		[0, 0, 0]
-// 	],
-// 	[
-// 		[0, 1, 1],
-// 		[0, 1, 0],
-// 		[0, 1, 0]
-// 	],
-// 	[
-// 		[0, 0, 0],
-// 		[1, 1, 1],
-// 		[0, 0, 1]
-// 	],
-// 	[
-// 		[0, 1, 0],
-// 		[0, 1, 0],
-// 		[1, 1, 0]
-// 	]
-// ];
-//Create arrays within arrays for the L shape and every possible rotation (must be 3x3)
-// const L = [
-// 	[
-// 		[0, 0, 1],
-// 		[1, 1, 1],
-// 		[0, 0, 0]
-// 	],
-// 	[
-// 		[0, 1, 0],
-// 		[0, 1, 0],
-// 		[0, 1, 1]
-// 	],
-// 	[
-// 		[0, 0, 0],
-// 		[1, 1, 1],
-// 		[1, 0, 0]
-// 	],
-// 	[
-// 		[1, 1, 0],
-// 		[0, 1, 0],
-// 		[0, 1, 0]
-// 	]
-// ];
-//Create an array for the O/box shape (must be 4x4)
-// const O = [
-// 	[
-// 		[0, 0, 0, 0],
-// 		[0, 1, 1, 0],
-// 		[0, 1, 1, 0],
-// 		[0, 0, 0, 0],
-// 	]
-// ];
-//Create arrays within arrays for the S shape and every possible rotation (must be 3x3)
-// const S = [
-// 	[
-// 		[0, 1, 1],
-// 		[1, 1, 0],
-// 		[0, 0, 0]
-// 	],
-// 	[
-// 		[0, 1, 0],
-// 		[0, 1, 1],
-// 		[0, 0, 1]
-// 	],
-// 	[
-// 		[0, 0, 0],
-// 		[0, 1, 1],
-// 		[1, 1, 0]
-// 	],
-// 	[
-// 		[1, 0, 0],
-// 		[1, 1, 0],
-// 		[0, 1, 0]
-// 	]
-// ];
-//Create arrays within arrays for the T shape and every possible rotation (must be 3x3)
-// const T = [
-// 	[
-// 		[0, 1, 0],
-// 		[1, 1, 1],
-// 		[0, 0, 0]
-// 	],
-// 	[
-// 		[0, 1, 0],
-// 		[0, 1, 1],
-// 		[0, 1, 0]
-// 	],
-// 	[
-// 		[0, 0, 0],
-// 		[1, 1, 1],
-// 		[0, 1, 0]
-// 	],
-// 	[
-// 		[0, 1, 0],
-// 		[1, 1, 0],
-// 		[0, 1, 0]
-// 	]
-// ];
-//Create arrays within arrays for the Z shape and every possible rotation (must be 3x3)
-// const Z = [
-// 	[
-// 		[1, 1, 0],
-// 		[0, 1, 1],
-// 		[0, 0, 0]
-// 	],
-// 	[
-// 		[0, 0, 1],
-// 		[0, 1, 1],
-// 		[0, 1, 0]
-// 	],
-// 	[
-// 		[0, 0, 0],
-// 		[1, 1, 0],
-// 		[0, 1, 1]
-// 	],
-// 	[
-// 		[0, 1, 0],
-// 		[1, 1, 0],
-// 		[1, 0, 0]
-// 	]
-// ];
-
-//get the canvas from html
 const cvs = document.getElementById("tetris");
-//context of the canvas
 const ctx = cvs.getContext("2d");
+const scoreElement = document.getElementById("score");
 
-//create a variable for the row and column 
 const ROW = 20;
 const COL = COLUMN = 10;
 const SQ = squareSize = 20;
+const VACANT = "WHITE"; // color of an empty square
 
-//since theyre are going to be squares that wont actually be counted set them to a invisible color
-const VACANT = "WHITE";
+// draw a square
+function drawSquare(x,y,color){
+    ctx.fillStyle = color;
+    ctx.fillRect(x*SQ,y*SQ,SQ,SQ);
 
-//next you should actually create the shaped, use https://www.w3schools.com/tags/canvas_fillrect.asp this method
-// ctx.fillStyle = "red";
-// ctx.fillRect(0,0,50,50);
-
-//next do the strokes
-// ctx.strokeStyle = "black";
-// ctx.strokeRect(0,0,50,50);
-
-//you might want to put that code into a function, i assume you'll need it often
-function drawSquare(x,y,color) {
-  // use color instead of typing out every color
-  ctx.fillStyle = color;
-  //use x & y variables for the locations instead of numbers
-  ctx.fillRect(x*SQ,y*SQ,SQ,SQ);
-
-  //make a square variable and use it in place of the size numbers
-  ctx.strokeStyle = "BLACK";
-  ctx.strokeRect(x*SQ,y*SQ,SQ,SQ);
+    ctx.strokeStyle = "BLACK";
+    ctx.strokeRect(x*SQ,y*SQ,SQ,SQ);
 }
 
-//Dario sudgested making the canvas itself an empty array
+// create the board
 
 let board = [];
-//create the rows with a loop
-for ( r = 0; r < ROW; r++){
-board[r] = [];
-//create the colors with a loop
-for (c = 0; c < COL; c ++){
-//white for now
-board[r][c] = VACANT;
-  }
+for( r = 0; r <ROW; r++){
+    board[r] = [];
+    for(c = 0; c < COL; c++){
+        board[r][c] = VACANT;
+    }
 }
 
-//then draw the board on the canvas
+// draw the board
 function drawBoard(){
-  for( r = 0; r < ROW; r++){
-    for(c = 0; c < COL; c++){
-      drawSquare(c,r,board[r][c]);
+    for( r = 0; r <ROW; r++){
+        for(c = 0; c < COL; c++){
+            drawSquare(c,r,board[r][c]);
+        }
     }
-  }
 }
-//call the draw board function(this might cange if you decide to do a co op tetris)
+
 drawBoard();
 
-//piece colors
-//write an array inside an array for the colors.
+// the pieces and their colors
+
 const PIECES = [
-//make the Z blocks red
-[Z, "red"],
-//s is green probably
-[S, "green"],
-//purple T
-[T, "purple"],
-//yellow 0
-[O, "yellow"],
-//orange L
-[L, "orange"],
-// Unsure color of I
-[I, "turquoise"],
-//Blue jay (:
-[J, "blue"], 
+    [Z,"red"],
+    [S,"green"],
+    [T,"yellow"],
+    [O,"blue"],
+    [L,"purple"],
+    [I,"cyan"],
+    [J,"orange"]
 ];
 
-//initiate the pieces
+// generate random pieces
 
 function randomPiece(){
-  let r = randomN = Math.floor(Math.random() * PIECES.length) //0-6
-  return new Piece(PIECES[r][0],PIECES[r][1])
+    let r = randomN = Math.floor(Math.random() * PIECES.length) // 0 -> 6
+    return new Piece( PIECES[r][0],PIECES[r][1]);
 }
+
 let p = randomPiece();
 
+// The Object Piece
 
-//create the piece (think theyre called tetrominos)
-function Piece(tetromino,color) {
-  this.tetromino = tetromino;
-  this.color = color;
-  //start from the first pattern 
-  this.tetrominoN = 0;
-  this.activeTetromino = this.tetromino[this.tetrominoN];//tetrominoN is the tetromino number
-
-  //set up the controls for the pieces
-  this.x = 0;
-  this.y = 0;
+function Piece(tetromino,color){
+    this.tetromino = tetromino;
+    this.color = color;
+    
+    this.tetrominoN = 0; // we start from the first pattern
+    this.activeTetromino = this.tetromino[this.tetrominoN];
+    
+    // we need to control the pieces
+    this.x = 3;
+    this.y = -2;
 }
 
-//fill 
-//just copy past the code from bellow
-//you can replace the code bellow after with a call to this fuction
+// fill function
+
 Piece.prototype.fill = function(color){
-  //just copy paste the for loop from a couple lines up and change some stuff
-  for( r = 0; r < this.activeTetromino.length; r++){
-    for(c = 0; c < this.activeTetromino.length; c++){
-      //draw only filled squares
-      if( this.activeTetromino[r][c]){
-        drawSquare(this.x + c,this.y + r, color);
-      }
+    for( r = 0; r < this.activeTetromino.length; r++){
+        for(c = 0; c < this.activeTetromino.length; c++){
+            // we draw only occupied squares
+            if( this.activeTetromino[r][c]){
+                drawSquare(this.x + c,this.y + r, color);
+            }
+        }
     }
-  }
 }
 
-//draw the pieces to the board
+// draw a piece to the board
+
 Piece.prototype.draw = function(){
-  //just copy paste the for loop from a couple lines up and change some stuff
-  this.fill(this.color);
+    this.fill(this.color);
 }
-//call the draw thing
-// p.draw();
 
-//undraw so it doesnt smudge
+// undraw a piece
+
+
 Piece.prototype.unDraw = function(){
-  //just copy paste the for loop from a couple lines up and change some stuff
-  this.fill(VACANT);
+    this.fill(VACANT);
 }
 
-//to make the piece move we need to change the x and y vars above so... more loops! yay -_-
+// move Down the piece
 
-//move piece down 
-Piece.prototype.moveDown = function() {
-  if(!this.collision(0,1,this.activeTetromino)){
-//constant fall
-this.unDraw();
-this.y++;
-this.draw();
-  }else{
-      //lock it in
-      p = randomPiece();
-  }
-
-}
-
-//slide to the right
-
-Piece.prototype.moveRight = function() {
-  if(!this.collision(1,0,this.activeTetromino)){
-  //constant fall
-  this.unDraw();
-  this.x++;
-  this.draw();
-}
+Piece.prototype.moveDown = function(){
+    if(!this.collision(0,1,this.activeTetromino)){
+        this.unDraw();
+        this.y++;
+        this.draw();
+    }else{
+        // we lock the piece and generate a new one
+        this.lock();
+        p = randomPiece();
+    }
+    
 }
 
-//slide to the left
-Piece.prototype.moveLeft = function() {
-  if(!this.collision(-1,0,this.activeTetromino)){
-  //constant fall
-  this.unDraw();
-  this.x--;
-  this.draw();
-}
-}
-//cha cha real smooth
-Piece.prototype.rotate = function() {
-  let nextPattern = this.tetromino[(this.tetrominoN + 1)%this.tetromino.length];
-  if(!this.collision(0,0,nextPattern)){
-  //constant fall
-  this.unDraw();
-  //move 1 up in array 
-  this.tetrominoN = (this.tetrominoN + 1)%this.tetromino.length;
-  this.activeTetromino = this.tetromino[this.tetrominoN];
-  this.draw();
-}
+// move Right the piece
+Piece.prototype.moveRight = function(){
+    if(!this.collision(1,0,this.activeTetromino)){
+        this.unDraw();
+        this.x++;
+        this.draw();
+    }
 }
 
-//collision detection
+// move Left the piece
+Piece.prototype.moveLeft = function(){
+    if(!this.collision(-1,0,this.activeTetromino)){
+        this.unDraw();
+        this.x--;
+        this.draw();
+    }
+}
+
+// rotate the piece
+Piece.prototype.rotate = function(){
+    let nextPattern = this.tetromino[(this.tetrominoN + 1)%this.tetromino.length];
+    let kick = 0;
+    
+    if(this.collision(0,0,nextPattern)){
+        if(this.x > COL/2){
+            // it's the right wall
+            kick = -1; // we need to move the piece to the left
+        }else{
+            // it's the left wall
+            kick = 1; // we need to move the piece to the right
+        }
+    }
+    
+    if(!this.collision(kick,0,nextPattern)){
+        this.unDraw();
+        this.x += kick;
+        this.tetrominoN = (this.tetrominoN + 1)%this.tetromino.length; // (0+1)%4 => 1
+        this.activeTetromino = this.tetromino[this.tetrominoN];
+        this.draw();
+    }
+}
+
+let score = 0;
+
+Piece.prototype.lock = function(){
+    for( r = 0; r < this.activeTetromino.length; r++){
+        for(c = 0; c < this.activeTetromino.length; c++){
+            // we skip the vacant squares
+            if( !this.activeTetromino[r][c]){
+                continue;
+            }
+            // pieces to lock on top = game over
+            if(this.y + r < 0){
+                alert("Game Over");
+                // stop request animation frame
+                gameOver = true;
+                break;
+            }
+            // we lock the piece
+            board[this.y+r][this.x+c] = this.color;
+        }
+    }
+    // remove full rows
+    for(r = 0; r < ROW; r++){
+        let isRowFull = true;
+        for( c = 0; c < COL; c++){
+            isRowFull = isRowFull && (board[r][c] != VACANT);
+        }
+        if(isRowFull){
+            // if the row is full
+            // we move down all the rows above it
+            for( y = r; y > 1; y--){
+                for( c = 0; c < COL; c++){
+                    board[y][c] = board[y-1][c];
+                }
+            }
+            // the top row board[0][..] has no row above it
+            for( c = 0; c < COL; c++){
+                board[0][c] = VACANT;
+            }
+            // increment the score
+            score += 10;
+        }
+    }
+    // update the board
+    drawBoard();
+    
+    // update the score
+    scoreElement.innerHTML = score;
+}
+
+// collision fucntion
+
 Piece.prototype.collision = function(x,y,piece){
-for( r = 0; r < piece.length; r++){
-  for( c = 0; c < piece.length; c++){
-    //check for if the square is filled or empty
-    if(!piece[r][c]){
-      continue;
+    for( r = 0; r < piece.length; r++){
+        for(c = 0; c < piece.length; c++){
+            // if the square is empty, we skip it
+            if(!piece[r][c]){
+                continue;
+            }
+            // coordinates of the piece after movement
+            let newX = this.x + c + x;
+            let newY = this.y + r + y;
+            
+            // conditions
+            if(newX < 0 || newX >= COL || newY >= ROW){
+                return true;
+            }
+            // skip newY < 0; board[-1] will crush our game
+            if(newY < 0){
+                continue;
+            }
+            // check if there is a locked piece alrady in place
+            if( board[newY][newX] != VACANT){
+                return true;
+            }
+        }
     }
-    //location of piece after moving
-    let newX = this.x + c + x;
-    let newY = this.y + r + y;
-
-    //now we set a bunch of rules
-    if(newX < 0 || newX >= COL || newY >= ROW){
-      return true;
-    }
-    if(newY < 0){
-      continue;
-    }
-    if( board[newY][newX] !=VACANT){
-      return true;
-    }
-  }
-}
-}
-//event listener for controls
-document.addEventListener("keydown", CONTROL);
-
-function CONTROL(event) {
-  if(event.keyCode == 37){
-p.moveLeft();
-  }else if(event.keyCode === 38){
-p.rotate();
-  }else if(event.keyCode === 39){
-p.moveRight();
-  }else if(event.keyCode = 40){
-p.moveDown();
-  }
+    return false;
 }
 
+// CONTROL the piece
 
-//fall once every tick
+document.addEventListener("keydown",CONTROL);
+
+function CONTROL(event){
+    if(event.keyCode == 37){
+        p.moveLeft();
+        dropStart = Date.now();
+    }else if(event.keyCode == 38){
+        p.rotate();
+        dropStart = Date.now();
+    }else if(event.keyCode == 39){
+        p.moveRight();
+        dropStart = Date.now();
+    }else if(event.keyCode == 40){
+        p.moveDown();
+    }
+}
+
+// drop the piece every 1sec
+
 let dropStart = Date.now();
-function drop() {
-  let now = Date.now();
-  let delta = now - dropStart;
-  //1000 mil secs
-  if (delta > 1000){
-    p.moveDown();
-    dropStart = Date.now();
-  }
-  requestAnimationFrame(drop);
+let gameOver = false;
+function drop(){
+    let now = Date.now();
+    let delta = now - dropStart;
+    if(delta > 1000){
+        p.moveDown();
+        dropStart = Date.now();
+    }
+    if( !gameOver){
+        requestAnimationFrame(drop);
+    }
 }
+
 drop();
-//get the context of canvas to get methods and properties and allow use in JS
-
-//Create arrays to make the variable positions for each shape (might want to do this in another JS file)
-
-
-//since each square on each shape is 20 px as well as the grid we can set a var/const for sqaures instead of counting 20px
-
-//the game board is 10x20 squares
-
-//create the board using an array and loops to make each row and collum
-
-//if a square is in the top left it will be at board[0][0] bottom right will be [19][9] this method should be fastest
-
-//to control the shapes and rotations you should create 3x3 squares using arrays and set the ones not being used to empty while the squares with actual squares in it should be set to 1, the rotation axis should obviously be in the center
-
-//like dario sudgested make an array inside an array for every shape 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
