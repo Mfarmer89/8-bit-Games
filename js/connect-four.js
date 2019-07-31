@@ -5,6 +5,7 @@ var selectedCell;
 var player = "player1";
 var singlePlayer;
 var win;
+var winMsg;
 var gridPosition = [
   [0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0],
@@ -145,19 +146,24 @@ function checkDiagonal2(playerNumber) {
   }
 }
 
+function won(enterplayernumber) {
+  winMsg = `Player ${enterplayernumber} wins!`
+  cheer.play();
+  document.getElementsByTagName("h3")[0].innerHTML = winMsg;
+  document.querySelector("div.winModal").setAttribute("class", "show-modal");
+  // working with error msg ^
+}
+
 function checkForWin () {
-  checkHorizontal(1);
-  checkHorizontal(2);
-  checkVertical(1);
-  checkVertical(2);
-  checkDiagonal1(1);
-  checkDiagonal1(2);
-  checkDiagonal2(1);
-  checkDiagonal2(2);
-  if (win === true) {
-    cheer.play();
-    document.querySelector("div.winModal").setAttribute("class", "show-modal");
-    //clear board on exiting pop up
+  for(var i = 1; i < 3; i++) {
+    checkHorizontal(i);
+    checkVertical(i);
+    checkDiagonal1(i);
+    checkDiagonal2(i);
+    if (win === true) {
+      won(i);
+      break;
+    }
   }
 }
 
@@ -201,5 +207,6 @@ document.getElementById("close").addEventListener("click", function() {
     [0, 0, 0, 0, 0, 0, 0],
     [9, 9, 9, 9, 9, 9, 9]
   ];
+  document.location.reload(true);
 });
 

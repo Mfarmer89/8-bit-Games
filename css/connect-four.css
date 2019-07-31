@@ -26,6 +26,20 @@
   border-radius: 50%;
 }
 
+.modal {
+  background: #DDD;
+  border: 2px solid black;
+  height: 420px;
+  margin: 0 auto;
+  opacity: 0.9;
+  padding: auto;
+  padding-top: 180px;
+  position: fixed;
+  top: 10px;
+  left: 300px;
+  width: 700px;
+}
+
 #modal {
   background: #DDD;
   border: 2px solid black;
@@ -37,7 +51,7 @@
   position: fixed;
   top: 10px;
   left: 300px;
-  width: 705px;
+  width: 700px;
 }
 
 #modal div {
@@ -72,13 +86,13 @@ span {
   top: 10px;
   left: 300px;
   visibility: hidden;
-  width: 705px;
+  width: 700px;
 }
 
 h3 {
   display: block;
   font-family: sans-serif;
-  font-size: 80px;
+  font-size: 60px;
   margin: 10px auto;
   width: 400px;
 }
