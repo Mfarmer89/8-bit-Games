@@ -37,7 +37,7 @@ document.querySelectorAll("#modal div:first-child")[0].addEventListener("click",
   singlePlayer = true;
   startModal.setAttribute("style", "display: none;");
 });
-document.querySelectorAll("#modal div:nth-child(2n)")[0].addEventListener("click", function() {
+document.querySelectorAll("#modal div:nth-child(3n)")[0].addEventListener("click", function() {
   singlePlayer = false;
   startModal.setAttribute("style", "display: none;");
 });

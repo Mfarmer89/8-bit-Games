@@ -8,6 +8,18 @@ const COL = COLUMN = 10;
 const SQ = squareSize = 20;
 const VACANT = "WHITE"; // color of an empty square
 
+var playerName;
+var start = document.getElementById("startGame"); 
+start.addEventListener("click", function(event) {
+var playerName = event.target.name.value;
+console.log(playerName);
+event.target.value = "";
+document.getElementById("modal").setAttribute("style", "visibility: hidden;");
+
+});
+
+
+
 // draw a square
 function drawSquare(x,y,color){
     ctx.fillStyle = color;
