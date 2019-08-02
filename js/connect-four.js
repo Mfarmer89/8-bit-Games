@@ -4,7 +4,7 @@ var selectedRow;
 var selectedCell;
 var player = "player1";
 var singlePlayer;
-var playing = "false";
+var playing = false;
 var win;
 var winMsg;
 var gridPosition = [
@@ -13,8 +13,7 @@ var gridPosition = [
   [0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0],
-  [9, 9, 9, 9, 9, 9, 9]
+  [0, 0, 0, 0, 0, 0, 0]
 ];
 
 //draw grid
@@ -35,11 +34,11 @@ drawGrid();
 //select single or 2 player mode
 var startModal = document.getElementById("modal");
 document.querySelectorAll("#modal div:first-child")[0].addEventListener("click", function() {
-  singlePlayer = "true";
+  singlePlayer = true;
   startModal.setAttribute("style", "display: none;");
 });
 document.querySelectorAll("#modal div:nth-child(2n)")[0].addEventListener("click", function() {
-  singlePlayer = "false";
+  singlePlayer = false;
   startModal.setAttribute("style", "display: none;");
 });
 
@@ -51,18 +50,22 @@ cheer.src = "audio/1_person_cheering.mp3";
 
 //locate empty row to fill
 function findRow(selectedColumn) {
-  var i = 0;
-  while(gridPosition[i][selectedColumn] === 0) {
-    i++;
+  selectedRow = null;
+  for(var i = 5; i >= 0; i--) {
+    if (gridPosition[i][selectedColumn] === 0) {
+      selectedRow = i;
+      break;
+    }
+  }
+  if(selectedRow === null) {
+    return;
   }
   //add player # to array
-  if (player === "player1") {
-    gridPosition[i-1][selectedColumn] = 1;
+  if(player === "player1") {
+    gridPosition[selectedRow][selectedColumn] = 1;
   } else {
-    gridPosition[i-1][selectedColumn] = 2;
+    gridPosition[i][selectedColumn] = 2;
   }
-  //save selected row number
-  selectedRow = i-1;
 }
 
 //find cell location in single array of cells
@@ -176,12 +179,16 @@ grid.addEventListener("click", addPiece);
 //event function
 function addPiece(event){
 
-  if (playing !== "false" || !event.target.className.includes("cell")) {
+  if (playing || !event.target.className.includes("cell")) {
     return;
   }
-  playing = "true";
+  playing = true;
   selectedColumn = event.target.getAttribute("data-column") -1;
   findRow(selectedColumn);
+  if(selectedRow === null) {
+    playing = false;
+    return;
+  }
   getSelectedCell(selectedRow, selectedColumn);
   var allCells = document.querySelectorAll(".cell");
   blop.play();
@@ -189,17 +196,18 @@ function addPiece(event){
   checkForWin();
   switchPlayer();
   //computer as player 2
-  if(singlePlayer === "true") {
-    selectedColumn = Math.floor(Math.random() * 7);
-    console.log("computer", selectedColumn);
-    findRow(selectedColumn);
+  if(singlePlayer === true) {
+    do {
+      selectedColumn = Math.floor(Math.random() * 7);
+      findRow(selectedColumn);
+    } while(selectedRow === null);
     getSelectedCell(selectedRow, selectedColumn);
     blop.play();
     allCells[selectedCell].setAttribute("class", "cell " + player);
     checkForWin();
     switchPlayer();
   }
-  playing = "false";
+  playing = false;
 }
 
 //reset
@@ -214,8 +222,7 @@ document.getElementById("close").addEventListener("click", function() {
   //   [0, 0, 0, 0, 0, 0, 0],
   //   [0, 0, 0, 0, 0, 0, 0],
   //   [0, 0, 0, 0, 0, 0, 0],
-  //   [0, 0, 0, 0, 0, 0, 0],
-  //   [9, 9, 9, 9, 9, 9, 9]
+  //   [0, 0, 0, 0, 0, 0, 0]
   // ];
   document.location.reload(true);
 });
