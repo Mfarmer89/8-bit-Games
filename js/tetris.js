@@ -283,3 +283,10 @@ function drop(){
 }
 
 drop();
+
+var SOUND = document.getElementById("music");
+function lowVolume() {
+SOUND.volume = 0.1;
+}
+
+lowVolume();
