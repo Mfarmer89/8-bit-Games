@@ -9,12 +9,13 @@ const SQ = squareSize = 20;
 const VACANT = "WHITE"; // color of an empty square
 
 var playerName;
+console.log(playerName);
 var start = document.getElementById("startGame"); 
 start.addEventListener("click", function(event) {
-var playerName = event.target.name.value;
+playerName = event.target.name.value;
 console.log(playerName);
 event.target.value = "";
-document.getElementById("modal").setAttribute("style", "visibility: hidden;");
+// document.getElementById("modal").setAttribute("style", "visibility: hidden;");
 
 });
 
@@ -168,6 +169,11 @@ Piece.prototype.rotate = function(){
     }
 }
 
+function storeData() {
+    localStorage.setItem("playerName", JSON.stringify(playerName));
+    localStorage.setItem("playerScore", JSON.stringify(score));
+   }
+
 let score = 0;
 
 Piece.prototype.lock = function(){
@@ -179,7 +185,8 @@ Piece.prototype.lock = function(){
             }
             // pieces to lock on top = game over
             if(this.y + r < 0){
-                alert("Game Over");
+                storeData();
+                alert("YOU SUCK AT TETRIS M8");
                 // stop request animation frame
                 gameOver = true;
                 break;
@@ -266,6 +273,12 @@ function CONTROL(event){
     }
 }
 
+
+function storeData() {
+    localStorage.setItem("playerName", JSON.stringify(playerName));
+    localStorage.setItem("playerScore", JSON.stringify(score));
+   }
+
 // drop the piece every 1sec
 
 let dropStart = Date.now();
@@ -284,9 +297,5 @@ function drop(){
 
 drop();
 
-var SOUND = document.getElementById("music");
-function lowVolume() {
-SOUND.volume = 0.1;
-}
-
-lowVolume();
+console.log(playerName);
+console.log(score);
