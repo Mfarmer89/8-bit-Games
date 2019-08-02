@@ -1,8 +1,9 @@
 body {
-  background: rgb(162, 162, 233); 
+  background: #113; 
 }
 
 h1 {
+  color: rgb(234, 234, 255);
   font-family: 'Saira Stencil One', cursive;
   font-size: 100px;
   margin: 50px;
@@ -20,7 +21,6 @@ p {
 }
 
 main {
-  /* background: rgb(162, 162, 233); */
   display: flex;
 }
 
@@ -34,7 +34,7 @@ main {
 }
 
 .button {
-  background: rgb(162, 162, 233);
+  background: #113;
   border: 2px solid black;
   height: 30px;
   margin: 0 auto 20px;
@@ -42,9 +42,19 @@ main {
 }
 
 a {
-  color: black;
+  color: rgb(234, 234, 255);
   cursor: pointer;
   font-size: 24px;
   text-decoration: none;
+}
 
+.return {
+  background:  white;
+  margin: 20px auto 30px;
+  text-align: center;
+  width: 200px;
+}
+
+.return a {
+  color: black;
 }
