@@ -1,0 +1,45 @@
+body {
+  background: #113;
+  /* background-image: url(../images/arcadeTetris.jpg); */
+  background-size: 100%;
+}
+
+h1 {
+  color: rgb(234, 234, 255);
+  font-family: 'Saira Stencil One', cursive;
+  font-size: 100px;
+  margin: 50px;
+  text-align: center;
+}
+
+nav {
+  background:rgba(46, 60, 120, 0.4);
+  border: 3px solid black;
+  display: block;
+  float: right;
+  margin: 5% 5% 0 0;
+  text-align: center;
+}
+
+a {
+  background: rgb(234, 234, 255);
+  border: 3px solid black;
+  color:black;
+  font-size: 26px;
+  display: block;
+  margin: 15px;
+  padding: 15px;
+  text-decoration: none;
+}
+
+table,
+tr,
+th,
+td {
+  background: white;
+  border: 1px solid black;
+  font-size: 40px;
+  margin: 10px auto; 
+  text-align: center;
+  width: 400px;
+}
