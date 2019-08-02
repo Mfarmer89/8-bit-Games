@@ -1,6 +1,11 @@
 
 var pName = JSON.parse(localStorage.getItem("playerName")) || "";
 var score = JSON.parse(localStorage.getItem("playerScore")) || "";
+var table = document.getElementById("table");
+
+
+pName = "John";
+score = 90;
 
 function renderChild(parent, elementType, data) {
   var element =  document.createElement(elementType);
@@ -10,7 +15,7 @@ function renderChild(parent, elementType, data) {
 }
 
 function renderHeader() {
-  var table = document.getElementById("table");
+  table.innerHTML = "";
   var row = renderChild(table, "tr");
   var header =  document.createElement("th");
   header.setAttribute("colspan", "2");
@@ -19,16 +24,10 @@ function renderHeader() {
 
 }
 function renderRow() {
-  renderChild("table", "tr");
-  renderChild("tr", "td", pName);
-  renderChild("tr", "td", score);
+  var row = renderChild(table, "tr");
+  renderChild(row, "td", pName);
+  renderChild(row, "td", score);
 }
 
 renderHeader();
 renderRow();
-
-
-function storeData() {
-  localStorage.setItem("playerName", JSON.stringify(NAME));
-  localStorage.setItem("playerScore", JSON.stringify(SCORE));
-}
