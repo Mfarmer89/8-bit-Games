@@ -9,15 +9,12 @@ const SQ = squareSize = 20;
 const VACANT = "WHITE"; // color of an empty square
 
 var playerName;
-console.log(playerName);
-var start = document.getElementById("startGame"); 
-start.addEventListener("click", function(event) {
-playerName = event.target.name.value;
-console.log(playerName);
-event.target.value = "";
-// document.getElementById("modal").setAttribute("style", "visibility: hidden;");
-
-});
+// var start = document.getElementById("startGame"); 
+// start.addEventListener("click", function(event) {
+//     playerName = event.target.name.value;
+//     event.target.value = "";
+//     document.getElementById("modal").setAttribute("style", "visibility: hidden;");
+// });
 
 
 
@@ -274,10 +271,10 @@ function CONTROL(event){
 }
 
 
-function storeData() {
-    localStorage.setItem("playerName", JSON.stringify(playerName));
-    localStorage.setItem("playerScore", JSON.stringify(score));
-   }
+// function storeData() {
+//     localStorage.setItem("playerName", JSON.stringify(playerName));
+//     localStorage.setItem("playerScore", JSON.stringify(score));
+//    }
 
 // drop the piece every 1sec
 
@@ -296,6 +293,3 @@ function drop(){
 }
 
 drop();
-
-console.log(playerName);
-console.log(score);
