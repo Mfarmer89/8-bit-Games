@@ -6,33 +6,37 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>8-bit</title>
   <link rel="stylesheet" href="css/reset.css" type="text/css" />
+  <link href="https://fonts.googleapis.com/css?family=Darker+Grotesque:700|Saira+Stencil+One&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/connect-four.css" type="text/css" />
 </head>
 <body>
+  <header>
+      <h1>8-bit Games</h1>
+    </header>
   <main>
-
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="">Top Scores</a>
-      <a href="about-us.html">About Us</a>
-    </nav>
-   
-    <!-- starting modal -->
-    <div id="modal">
-        <div><span>Single Player</span></div>
-        <div><span>Two Player</span></div>
+    <div id="page">
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="">Top Scores</a>
+        <a href="about-us.html">About Us</a>
+      </nav>
+     
+      <!-- starting modal -->
+      <div id="modal">
+          <div><span>Single Player</span></div>
+          <div><span>Two Player</span></div>
+      </div>
+  
+      <!-- winning modal -->
+      <div class="winModal">
+          <h3></h3>
+          <div id="close">Close &times;</div> 
+      </div>
+  
+      <!-- grid -->
+      <div id="grid">
+      </div>
     </div>
-
-    <!-- winning modal -->
-    <div class="winModal">
-        <h3></h3>
-        <div id="close">Close &times;</div> 
-    </div>
-
-    <!-- grid -->
-    <div id="grid">
-    </div>
-
   </main>
   <script src="js/connect-four.js"></script>
 </body>

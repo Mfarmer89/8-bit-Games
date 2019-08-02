@@ -4,6 +4,18 @@ body {
   background-size: 100%;
 }
 
+header {
+  /* background: white; */
+}
+
+h1 {
+  color: rgb(234, 234, 255);
+  font-family: 'Saira Stencil One', cursive;
+  font-size: 100px;
+  margin: 50px;
+  text-align: center;
+}
+
 #grid {
   background: blue;
   border: 3px solid black;
@@ -22,7 +34,6 @@ body {
 .cell {
   background: rgb(234, 234, 255);
   border: 5px solid blue;
-  /* background: white; */
   border-radius:50%;
 }
 
@@ -39,29 +50,32 @@ body {
 /* .modal {
   background: #DDD;
   border: 2px solid black;
-  height: 420px;
   margin: 0 auto;
   opacity: 0.9;
   padding: auto;
   padding-top: 180px;
-  position: fixed;
-  top: 10px;
-  left: 300px;
-  width: 700px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 } */
+
+#page {
+  position: relative;
+}
 
 #modal {
   background: #DDD;
   border: 2px solid black;
-  height: 420px;
-  /* margin: 0 auto; */
   opacity: 0.9;
   padding: auto;
   padding-top: 180px;
   position: absolute;
-  top: 10px;
-  left: 300px;
-  width: 700px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 #modal div {
@@ -87,16 +101,16 @@ span {
 .winModal {
   background: rgb(252, 252, 252);
   border: 2px solid black;
-  height: 420px;
   margin: 0 auto;
   opacity: 0.9;
   padding: auto;
   padding-top: 180px;
-  position: fixed;
-  top: 10px;
-  left: 300px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   visibility: hidden;
-  width: 700px;
 }
 
 h3 {
@@ -119,18 +133,16 @@ h3 {
 .show-modal {
   background: rgb(252, 252, 252);
   border: 2px solid black;
-  height: 420px;
   margin: 0 auto;
   opacity: 0.7;
   padding: auto;
   padding-top: 180px;
-  position: fixed;
-  top: 10px;
-  left: 300px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   visibility: visible;
-  width: 705px;
-  /* transform: scale(1.0);
-  transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s; */
 }
 
 nav {
@@ -143,7 +155,7 @@ nav {
 }
 
 a {
-  background: white;
+  background: rgb(234, 234, 255);
   border: 3px solid black;
   color:black;
   font-size: 26px;
