@@ -10,7 +10,7 @@ body {
   box-shadow: 10px 10px 5px rgba(46, 60, 120, 0.5);
   cursor: pointer;
   display: grid;  
-  grid-gap: 10px;
+  grid-gap: 0;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
   height: 600px;
@@ -21,8 +21,9 @@ body {
 
 .cell {
   background: rgb(234, 234, 255);
+  border: 5px solid blue;
   /* background: white; */
-  border-radius: 50%;
+  border-radius:50%;
 }
 
 .player1 {

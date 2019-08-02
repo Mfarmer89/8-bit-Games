@@ -4,6 +4,7 @@ var selectedRow;
 var selectedCell;
 var player = "player1";
 var singlePlayer;
+var playing = "false";
 var win;
 var winMsg;
 var gridPosition = [
@@ -150,7 +151,7 @@ function won(enterplayernumber) {
   winMsg = `Player ${enterplayernumber} wins!`;
   cheer.play();
   document.getElementsByTagName("h3")[0].innerHTML = winMsg;
-  document.querySelector("div.winModal").setAttribute("class", "show-modal");
+  document.querySelector("div.winModal").className = "show-modal";
   // working with error msg ^
 }
 
@@ -167,18 +168,19 @@ function checkForWin () {
   }
 }
 
-//event listener if not comp turn
+//event listener
 var grid = document.getElementById("grid");
-if (player === "player1" || singlePlayer === "false") {
-  grid.addEventListener("click", addPiece);
-}
+grid.addEventListener("click", addPiece);
+
 
 //event function
-function addPiece(){
+function addPiece(event){
+
+  if (playing !== "false" || !event.target.className.includes("cell")) {
+    return;
+  }
+  playing = "true";
   selectedColumn = event.target.getAttribute("data-column") -1;
-  // if(gridPosition[0][selectedColumn] !== 0) {
-  //   return;
-  // }
   findRow(selectedColumn);
   getSelectedCell(selectedRow, selectedColumn);
   var allCells = document.querySelectorAll(".cell");
@@ -188,7 +190,8 @@ function addPiece(){
   switchPlayer();
   //computer as player 2
   if(singlePlayer === "true") {
-    selectedColumn = Math.floor(Math.random() * 8);
+    selectedColumn = Math.floor(Math.random() * 7);
+    console.log("computer", selectedColumn);
     findRow(selectedColumn);
     getSelectedCell(selectedRow, selectedColumn);
     blop.play();
@@ -196,11 +199,12 @@ function addPiece(){
     checkForWin();
     switchPlayer();
   }
+  playing = "false";
 }
 
 //reset
 document.getElementById("close").addEventListener("click", function() {
-  // document.querySelector("div.show-modal").setAttribute("class", "winModal");
+  // document.querySelector("div.show-modal").className = "winModal";
   // // document.querySelectorAll("#grid>div").setAttribute("class", "cell");
   // document.getElementById("grid").innerHTML = "";
   // drawGrid();
